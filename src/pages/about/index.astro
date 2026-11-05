@@ -1,0 +1,81 @@
+---
+import {Timeline} from 'astro-pure/user'
+import PageLayout from '@/layouts/CommonPage.astro'
+
+const headings = [
+  { depth: 2, slug: 'hobbies', text: '目标' },
+  { depth: 2, slug: 'about-blog', text: '关于博客' }
+]
+---
+
+<PageLayout title='About' {headings}>
+  <p>全栈开发者 / AI Agent 实践者</p>
+  <p>
+    你好，我是 Mortal，来自广东湛江，现于广州求学。我是一名实战驱动的全栈开发者，长期深耕 AI 应用、Node.js /
+    Vue 全栈开发、VPS 基础设施与网络安全，能从需求拆解、编码实现到部署上线全程落地，注重系统稳定性与可观测性。<br
+    />
+    当前我主要关注 AI Agent、MCP 生态、大模型编程与知识库应用等热门方向，习惯把新想法快速做成可运行的项目，再沉淀为开源仓库、教程与方法论。<br
+    />
+    除写代码外，我也喜欢研究如何让 AI 真正进入日常工作流——比如搭建带个人知识库的智能助手、自动化工作流，以及让 Agent
+    可靠地处理真实任务。未来会继续在 AI 与基础设施融合的方向上精进，保持探索与输出。
+  </p>
+
+  {/* general-talk */}
+  <h2 id='hobbies'>目标</h2>
+  <ul>
+    <li>
+      <b>技术纵深：</b>从「能跑起来」走向「跑得稳」——性能、架构与故障演练，而不只是把功能写完。
+    </li>
+    <li>
+      <b>Agent 实践：</b>不只跟进新工具，而是把 Agent 放进真实任务里验证，跑不通的也照实记下来。
+    </li>
+    <li>
+      <b>持续输出：</b>把踩过的坑整理成可复用的教程与开源项目，而不是只留在自己的笔记里。
+    </li>
+  </ul>
+
+  {/* about-blog */}
+  <h2 id='about-blog'>关于博客</h2>
+  <p>博客历史:</p>
+  <Timeline
+    events={[
+      {
+        date: '2026-11-05',
+        content: '域名完成 ICP 备案，站点部署迁移至腾讯云 EdgeOne'
+      },
+      {
+        date: '2026-03-17',
+        content: '新博客成立，使用Astro框架astro-theme-pure模板构建'
+      },
+      {
+        date: '2026-01-28',
+        content: '博客迁移重构，使用Astro框架Firefly模板重新构建'
+      },
+      {
+        date: '2025-11-24',
+        content: '博客正式成立，使用typecho框架的wayxz主题构建'
+      }
+    ]}
+  />
+  <p>网站的顺畅运营和个性化定制也依赖于资源和 以下优秀项目/服务提供商提供技术支持：</p>
+  <ul>
+    <li>
+      框架和主题: <a
+        href='https://astro.build/'
+        target='_blank'
+        rel='noopener noreferrer'>Astro</a
+      > + <a
+        href='https://github.com/cworld1/astro-theme-pure'
+        target='_blank'
+        rel='noopener noreferrer'>Astro Theme Pure</a
+      >
+    </li>
+    <li>
+      部署与托管: <a
+        href='https://console.cloud.tencent.com/edgeone/zones'
+        target='_blank'
+        rel='noopener noreferrer'>腾讯云 EdgeOne</a
+      >
+    </li>
+  </ul>
+</PageLayout>

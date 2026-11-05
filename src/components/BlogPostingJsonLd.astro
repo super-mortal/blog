@@ -1,0 +1,83 @@
+---
+interface Props {
+  title: string
+  description: string
+  slug: string
+  publishDate: Date
+  updatedDate?: Date
+  image?: string
+  author: string
+  siteName: string
+  /** 文章分类，对应 schema.org articleSection */
+  category?: string
+  /** 文章标签，对应 schema.org keywords */
+  tags?: string[]
+  /** 正文字数（去空白后的字符数），对应 schema.org wordCount */
+  wordCount?: number
+}
+
+const {
+  title,
+  description,
+  slug,
+  publishDate,
+  updatedDate,
+  image,
+  author,
+  siteName,
+  category,
+  tags,
+  wordCount
+} = Astro.props
+
+const site = Astro.site ?? Astro.url
+const articleURL = new URL(`/blog/${slug}`, site).href
+const imageURL = image ? new URL(image, site).href : undefined
+const dateModified = updatedDate ?? publishDate
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  // 与 canonical 保持一致，避免信号冲突
+  url: articleURL,
+  datePublished: publishDate.toISOString(),
+  dateModified: dateModified.toISOString(),
+  author: {
+    '@type': 'Person',
+    name: author,
+    url: new URL('/about', site).href
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: siteName,
+    logo: {
+      '@type': 'ImageObject',
+      url: new URL('/android-chrome-512x512.png', site).href,
+      width: 512,
+      height: 512
+    }
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': articleURL
+  },
+  isPartOf: {
+    '@type': 'Blog',
+    '@id': new URL('/blog', site).href,
+    name: `${siteName} 博客`
+  },
+  inLanguage: 'zh-CN',
+  isAccessibleForFree: true,
+  ...(category && { articleSection: category }),
+  ...(tags && tags.length > 0 && { keywords: tags.join(', ') }),
+  ...(wordCount && { wordCount }),
+  // 站点分享图统一为 1200×630
+  ...(imageURL && {
+    image: [{ '@type': 'ImageObject', url: imageURL, width: 1200, height: 630 }]
+  })
+}
+---
+
+<script is:inline type='application/ld+json' set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />
