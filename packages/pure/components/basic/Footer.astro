@@ -39,13 +39,14 @@ const footerLink1 = footerConf.links?.filter(({ pos }) => pos === 1) || []
           /* 公安联网备案：图标显示于编号之前，与 ICP 编号同排；桌面端单行，窄屏随容器自动换行 */
           icp.police && (
             <a
-              href='https://beian.mps.gov.cn/'
+              href={icp.policeLink || 'https://beian.mps.gov.cn/'}
               target='_blank'
               rel='noopener noreferrer'
               class='inline-flex items-center gap-1 text-sm'
             >
               {icp.policeIcon && (
-                <img src={icp.policeIcon} alt='' aria-hidden='true' class='h-4 w-4' />
+                /* 官方图标为 36×40 竖版比例，固定高度、宽度自适应，避免被拉伸变形 */
+                <img src={icp.policeIcon} alt='' aria-hidden='true' class='h-4 w-auto' />
               )}
               {icp.police}
             </a>
