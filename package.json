@@ -15,7 +15,6 @@
   "scripts": {
     "dev": "astro dev",
     "dev:check": "astro check --watch & astro dev",
-    "prebuild": "node scripts/generate-og-images.mjs",
     "build": "astro check && astro build",
     "preview": "astro preview",
     "sync": "astro sync",

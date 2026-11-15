@@ -110,6 +110,59 @@
     background: hsl(var(--card) / 1);
   }
 
+  /* 顶部快捷键指引：参与布局，图片区自动让出这一行 */
+  .article-lightbox-hints {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--un-default-border-color);
+    border-radius: 999px;
+    background: hsl(var(--muted) / 0.9);
+    font-size: 0.75rem;
+    line-height: 1;
+    color: hsl(var(--muted-foreground) / var(--un-text-opacity, 1));
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  .article-lightbox-hints .hint {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .article-lightbox-hints kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.4rem;
+    height: 1.3rem;
+    padding: 0 0.32rem;
+    margin-right: 0.35rem;
+    border: 1px solid var(--un-default-border-color);
+    border-bottom-width: 2px;
+    border-radius: 0.3rem;
+    background: hsl(var(--background) / 1);
+    font-family: inherit;
+    font-size: 0.6875rem;
+    line-height: 1;
+    color: hsl(var(--foreground) / 0.75);
+  }
+
+  .article-lightbox-hints .hint-sep {
+    width: 1px;
+    height: 0.85rem;
+    background: var(--un-default-border-color);
+  }
+
+  /* 触屏或窄屏不显示键盘提示 */
+  @media (hover: none), (max-width: 640px) {
+    .article-lightbox-hints {
+      display: none;
+    }
+  }
+
   @media (max-width: 640px) {
     .article-lightbox-controls {
       width: 100%;
@@ -136,6 +189,11 @@
       this.overlay.setAttribute('aria-label', '图片放大查看')
       this.overlay.hidden = true
       this.overlay.innerHTML = `
+        <div class="article-lightbox-hints" aria-hidden="true">
+          <span class="hint"><kbd>Esc</kbd>关闭</span>
+          <span class="hint-sep"></span>
+          <span class="hint"><kbd>←</kbd><kbd>→</kbd>切换</span>
+        </div>
         <div class="article-lightbox-stage">
           <img class="article-lightbox-image" alt="" />
         </div>
@@ -158,9 +216,15 @@
         if (target.closest('.article-lightbox-controls')) return
         this.close()
       })
-      this.overlay.querySelector('[data-action="prev"]')?.addEventListener('click', () => this.goTo(this.current - 1))
-      this.overlay.querySelector('[data-action="next"]')?.addEventListener('click', () => this.goTo(this.current + 1))
-      this.overlay.querySelector('.article-lightbox-close')?.addEventListener('click', () => this.close())
+      this.overlay
+        .querySelector('[data-action="prev"]')
+        ?.addEventListener('click', () => this.goTo(this.current - 1))
+      this.overlay
+        .querySelector('[data-action="next"]')
+        ?.addEventListener('click', () => this.goTo(this.current + 1))
+      this.overlay
+        .querySelector('.article-lightbox-close')
+        ?.addEventListener('click', () => this.close())
 
       document.addEventListener('click', this.handleImageClick)
       document.addEventListener('keydown', this.handleKeydown)
@@ -231,5 +295,6 @@
     }
   }
 
-  if (!customElements.get('article-lightbox')) customElements.define('article-lightbox', ArticleLightbox)
+  if (!customElements.get('article-lightbox'))
+    customElements.define('article-lightbox', ArticleLightbox)
 </script>

@@ -45,3 +45,6 @@ bunfig.toml
 
 ### WorkBuddy ###
 .workbuddy/
+
+### Local workflow (not pushed) ###
+/workflow/
